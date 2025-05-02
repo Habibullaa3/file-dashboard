@@ -1,67 +1,26 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="UTF-8">
-  <title>Google Drive Ulanish Testi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <title>Google Drive Fayl Menejeri</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://apis.google.com/js/api.js"></script>
-  <script src="https://accounts.google.com/gsi/client"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: 30px auto;
-    }
-    button {
-      margin-top: 10px;
-    }
-  </style>
 </head>
 <body>
-  <h2>🔐 Google Drive bilan ulanish</h2>
-  <p><strong>Status:</strong> <span id="status">⏳ Tekshirilmoqda...</span></p>
-  <button id="authBtn" class="btn btn-primary">Google bilan ulan</button>
-  <button id="signoutBtn" class="btn btn-secondary" style="display:none;">Chiqish</button>
-
-  <script>
-    const CLIENT_ID = '1058913752550-3uo0v3tirmnodjmt7u7pvk363jcf4c16.apps.googleusercontent.com';
-    const SCOPES = 'https://www.googleapis.com/auth/drive.file';
-
-    function initClient() {
-      gapi.client.init({
-        clientId: CLIENT_ID,
-        scope: SCOPES,
-        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"]
-      }).then(() => {
-        const authInstance = gapi.auth2.getAuthInstance();
-        authInstance.isSignedIn.listen(updateSigninStatus);
-        updateSigninStatus(authInstance.isSignedIn.get());
-
-        document.getElementById('authBtn').onclick = () => authInstance.signIn();
-        document.getElementById('signoutBtn').onclick = () => authInstance.signOut();
-      }).catch(error => {
-        console.error("Auth init xatosi:", error);
-        document.getElementById('status').innerText = "❌ Ulanishda xatolik.";
-      });
-    }
-
-    function updateSigninStatus(isSignedIn) {
-      const status = document.getElementById("status");
-      const authBtn = document.getElementById("authBtn");
-      const signoutBtn = document.getElementById("signoutBtn");
-
-      if (isSignedIn) {
-        status.innerText = "📡 Ulangan";
-        authBtn.style.display = "none";
-        signoutBtn.style.display = "inline-block";
-      } else {
-        status.innerText = "🚫 Ulanmagan";
-        authBtn.style.display = "inline-block";
-        signoutBtn.style.display = "none";
-      }
-    }
-
-    gapi.load('client:auth2', initClient);
-  </script>
+  <h1>Google Drive Fayl Menejeri</h1>
+  <button id="authorize_button">Kirish</button>
+  <button id="signout_button">Chiqish</button>
+  <div id="content" style="display: none;">
+    <select id="folder_select">
+      <option value="FOLDER_ID_ACTS">ACTS</option>
+      <option value="FOLDER_ID_OFFICE_MEMO">OFFICE MEMO</option>
+      <option value="FOLDER_ID_ACT_PPR">ACT PPR</option>
+    </select>
+    <input type="file" id="file_input" />
+    <button id="upload_button">Yuklash</button>
+    <input type="text" id="search_input" placeholder="Fayl nomi bo‘yicha izlash" />
+    <ul id="file_list"></ul>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
