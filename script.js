@@ -1,5 +1,5 @@
-const CLIENT_ID = 'YOUR_CLIENT_ID';
-const API_KEY = 'YOUR_API_KEY';
+const CLIENT_ID = '1058913752550-k2pb5llb7va6g0948u4li6b1qfp2nosh.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyCztbEtsF-zDHJyJ-02jr4Fa9q7WFNuXxY';
 const SCOPES = 'https://www.googleapis.com/auth/drive';
 
 function handleClientLoad() {
