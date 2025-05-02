@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <title>Google Drive Fayl Menejeri</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
   <script src="https://apis.google.com/js/api.js"></script>
 </head>
-<body>
+<body onload="handleClientLoad()">
   <h1>Google Drive Fayl Menejeri</h1>
   <button id="authorize_button">Kirish</button>
-  <button id="signout_button">Chiqish</button>
+  <button id="signout_button" style="display:none;">Chiqish</button>
   <div id="content" style="display: none;">
     <select id="folder_select">
-      <option value="FOLDER_ID_ACTS">ACTS</option>
-      <option value="FOLDER_ID_OFFICE_MEMO">OFFICE MEMO</option>
-      <option value="FOLDER_ID_ACT_PPR">ACT PPR</option>
+      <option value="1x4gtK0c5aeyZ6NFSyJIvyXRd7TXkiqOx">ACTS</option>
+      <option value="1-CSlLATsyI0X0_RHSe1mubgA5foj3dZm">OFFICE MEMO</option>
+      <option value="1WO4U7BGGjJhosIVCM6aGTdmIjguvz-gt">ACT PPR</option>
     </select>
     <input type="file" id="file_input" />
     <button id="upload_button">Yuklash</button>
