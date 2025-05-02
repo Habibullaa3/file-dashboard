@@ -1,5 +1,63 @@
 <!DOCTYPE html>
-<html><head><title>Test</title>
-  <script src="{{ url_for('static', filename='app.js') }}"></script>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Google Drive Ulanish Testi</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://accounts.google.com/gsi/client"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 30px auto;
+    }
+    button {
+      margin-top: 10px;
+    }
+  </style>
 </head>
-<body><h2>✅ Flask ishlayapti!</h2></body></html>
+<body>
+  <h2>🔐 Google Drive bilan ulanish</h2>
+  <p><strong>Status:</strong> <span id="status">⏳ Tekshirilmoqda...</span></p>
+  <button id="authBtn" class="btn btn-primary">Google bilan ulan</button>
+  <button id="signoutBtn" class="btn btn-secondary" style="display:none;">Chiqish</button>
+  <script>
+    const CLIENT_ID = '1058913752550-drqi00qc0a7gaomflu3uv14c8eoffhpv.apps.googleusercontent.com';
+    const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+
+    function initClient() {
+      gapi.client.init({
+        clientId: CLIENT_ID,
+        scope: SCOPES,
+        discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"]
+      }).then(() => {
+        const authInstance = gapi.auth2.getAuthInstance();
+        authInstance.isSignedIn.listen(updateSigninStatus);
+        updateSigninStatus(authInstance.isSignedIn.get());
+        document.getElementById('authBtn').onclick = () => authInstance.signIn();
+        document.getElementById('signoutBtn').onclick = () => authInstance.signOut();
+      });
+    }
+
+    function updateSigninStatus(isSignedIn) {
+      const status = document.getElementById("status");
+      const authBtn = document.getElementById("authBtn");
+      const signoutBtn = document.getElementById("signoutBtn");
+
+      if (isSignedIn) {
+        status.innerText = "📡 Ulangan";
+        authBtn.style.display = "none";
+        signoutBtn.style.display = "inline-block";
+      } else {
+        status.innerText = "🚫 Ulanmagan";
+        authBtn.style.display = "inline-block";
+        signoutBtn.style.display = "none";
+      }
+    }
+
+    gapi.load('client:auth2', initClient);
+  </script>
+</body>
+</html>
+
